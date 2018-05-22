@@ -21,7 +21,7 @@ import {
     show,
     xssEscape
 } from './utils.js';
-import {className, MAX_COUNT, TYPE_STRING} from './consts.js';
+import {className, TYPE_STRING} from './consts.js';
 
 const WIDGET_ID = 'sb_widget';
 const TIME_STRING_TODAY = 'TODAY';
@@ -460,10 +460,17 @@ class SBWidget {
       if (!this.sb.isCurrentUser(user)) {
         let item = this.chatSection.createUserListItem(user);
         this.chatSection.addClickEvent(item, () => {
-          hasClass(item.select, className.ACTIVE) ? removeClass(item.select, className.ACTIVE) : addClass(item.select, className.ACTIVE);
-          let selectedUserCount = this.chatSection.getSelectedUserIds(userContent.list).length;
-          this.chatSection.updateChatTop(target, selectedUserCount > 9 ? MAX_COUNT : selectedUserCount.toString(), null);
-          (selectedUserCount > 0) ? removeClass(target.startBtn, className.DISABLED) : addClass(target.startBtn, className.DISABLED);
+          this.sb.createNewChannel([user.userId], (channel) => {
+            console.log(channel);
+            let openChatBoard = this.chatSection.getChatBoard(channel.url);
+            if (!openChatBoard) {
+              var newChat = this.chatSection.getChatBoard(NEW_CHAT_BOARD_ID);
+              if (newChat) {
+                this.chatSection.closeChatBoard(newChat);
+              }
+              this._connectChannel(channel.url);
+            }
+          });
         });
         userContent.list.appendChild(item);
       }
