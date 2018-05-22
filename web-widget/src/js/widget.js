@@ -4,24 +4,24 @@ import ChatSection from './elements/chat-section.js';
 import Popup from './elements/popup.js';
 import Spinner from './elements/spinner.js';
 import Sendbird from './sendbird.js';
-import { 
-  hide, 
-  show, 
-  addClass, 
-  removeClass, 
-  hasClass, 
-  getFullHeight, 
-  insertMessageInList, 
-  getLastItem, 
-  isEmptyString, 
-  xssEscape, 
-  createNotificationSound,
-  requestNotification,
-  setCookie,
-  getCookie,
-  deleteCookie 
+import {
+    addClass,
+    createNotificationSound,
+    deleteCookie,
+    getCookie,
+    getFullHeight,
+    getLastItem,
+    hasClass,
+    hide,
+    insertMessageInList,
+    isEmptyString,
+    removeClass,
+    requestNotification,
+    setCookie,
+    show,
+    xssEscape
 } from './utils.js';
-import { className, TYPE_STRING, MAX_COUNT } from './consts.js';
+import {className, MAX_COUNT, TYPE_STRING} from './consts.js';
 
 const WIDGET_ID = 'sb_widget';
 const TIME_STRING_TODAY = 'TODAY';
@@ -61,7 +61,7 @@ class SBWidget {
     }
   }
 
-  startWithConnect(appId, userId, nickname, callback) {
+    startWithConnect(appId, userId, token, callback) {
     if (!window.SendBird) {
       console.error(ERROR_MESSAGE_SDK);
       return;
@@ -74,7 +74,7 @@ class SBWidget {
       });
       this._init();
       this._start(appId);
-      this._connect(userId, nickname, callback);
+        this._connect(userId, token, callback);
     } else {
       console.error(ERROR_MESSAGE);
     }
@@ -289,8 +289,8 @@ class SBWidget {
     }
   }
 
-  _connect(userId, nickname, callback) {
-    this.sb.connect(userId, nickname, () => {
+    _connect(userId, token, callback) {
+        this.sb.connect(userId, token, () => {
       this.widgetBtn.toggleIcon(true);
 
       this.listBoard.showChannelList();
@@ -377,19 +377,19 @@ class SBWidget {
       this.setMessageItem(channelSet.channel, targetBoard, [message], false, isBottom, lastMessage);
       channel.markAsRead();
       this.updateUnreadMessageCount(channel);
-    } 
+    }
     if (!targetBoard) {
       if ('Notification' in window) {
         var notification = new Notification(
-          "New Message", 
+            "New Message",
           {
-            "body": message.isFileMessage() ? message.name : message.message, 
+              "body": message.isFileMessage() ? message.name : message.message,
             "icon": "http://qnimate.com/wp-content/uploads/2014/07/web-notification-api-300x150.jpg"
           }
         );
         notification.onclick = function() {
           window.focus();
-        }
+        };
         this.notificationSound.play();
       }
     }
@@ -446,8 +446,8 @@ class SBWidget {
         });
         channelSet.message = newMessages;
       }
-      
-      let updatedMessage = document.getElementById(`${messageId}`)
+
+        let updatedMessage = document.getElementById(`${messageId}`);
       updatedMessage.remove();
     }
   }

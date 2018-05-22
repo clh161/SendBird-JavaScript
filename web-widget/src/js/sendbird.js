@@ -1,5 +1,5 @@
-import { MAX_COUNT } from './consts.js';
-import { xssEscape } from './utils.js';
+import {MAX_COUNT} from './consts.js';
+import {xssEscape} from './utils.js';
 
 const GLOBAL_HANDLER = 'GLOBAL_HANDLER';
 const GET_MESSAGE_LIMIT = 20;
@@ -21,19 +21,13 @@ class Sendbird {
     return !!this.sb.currentUser;
   }
 
-  connect(userId, nickname, action) {
-    this.sb.connect(userId.trim(), (user, error) => {
-      if (error) {
-        console.error(error);
-        return;
-      }
-      this.sb.updateCurrentUserInfo(nickname.trim(), '', (response, error) => {
-        if (error) {
-          console.error(error);
-          return;
-        }
-        action();
-      });
+    connect(userId, token, action) {
+        this.sb.connect(userId.trim(), token, (user, error) => {
+            if (error) {
+                console.error(error);
+                return;
+            }
+            action();
     });
   }
 
@@ -233,7 +227,7 @@ class Sendbird {
 
   getLastMessage(channel) {
     if (channel.lastMessage) {
-      return channel.lastMessage.isUserMessage() || channel.lastMessage.isAdminMessage() 
+        return channel.lastMessage.isUserMessage() || channel.lastMessage.isAdminMessage()
       ? channel.lastMessage.message : channel.lastMessage.name;
     }
     return '';
