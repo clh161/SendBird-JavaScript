@@ -61,7 +61,7 @@ class SBWidget {
     }
   }
 
-    startWithConnect(appId, userId, token, callback) {
+  startWithConnect(appId, userId, token, callback) {
     if (!window.SendBird) {
       console.error(ERROR_MESSAGE_SDK);
       return;
@@ -74,7 +74,7 @@ class SBWidget {
       });
       this._init();
       this._start(appId);
-        this._connect(userId, token, callback);
+      this._connect(userId, token, callback);
     } else {
       console.error(ERROR_MESSAGE);
     }
@@ -289,8 +289,8 @@ class SBWidget {
     }
   }
 
-    _connect(userId, token, callback) {
-        this.sb.connect(userId, token, () => {
+  _connect(userId, token, callback) {
+    this.sb.connect(userId, token, () => {
       this.widgetBtn.toggleIcon(true);
 
       this.listBoard.showChannelList();
@@ -381,9 +381,9 @@ class SBWidget {
     if (!targetBoard) {
       if ('Notification' in window) {
         var notification = new Notification(
-            "New Message",
+          "New Message",
           {
-              "body": message.isFileMessage() ? message.name : message.message,
+            "body": message.isFileMessage() ? message.name : message.message,
             "icon": "http://qnimate.com/wp-content/uploads/2014/07/web-notification-api-300x150.jpg"
           }
         );
@@ -401,9 +401,9 @@ class SBWidget {
       let channelSet = this.getChannelSet(channel.url);
       let newMessages = channelSet.message.map((msg) => {
         if (msg.messageId === message.messageId) {
-          return message
+          return message;
         } else {
-          return msg
+          return msg;
         }
       });
       channelSet.message = newMessages;
@@ -442,12 +442,12 @@ class SBWidget {
         this.listBoard.setChannelLastMessage(channel.url, lastMessage.isFileMessage() ? xssEscape(lastMessage.name) : xssEscape(lastMessage.message));
       } else {
         let newMessages = channelSet.message.filter((msg) => {
-          return msg.messageId.toString() !== messageId.toString()
+          return msg.messageId.toString() !== messageId.toString();
         });
         channelSet.message = newMessages;
       }
 
-        let updatedMessage = document.getElementById(`${messageId}`);
+      let updatedMessage = document.getElementById(`${messageId}`);
       updatedMessage.remove();
     }
   }

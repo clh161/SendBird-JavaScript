@@ -21,13 +21,13 @@ class Sendbird {
     return !!this.sb.currentUser;
   }
 
-    connect(userId, token, action) {
-        this.sb.connect(userId.trim(), token, (user, error) => {
-            if (error) {
-                console.error(error);
-                return;
-            }
-            action();
+  connect(userId, token, action) {
+    this.sb.connect(userId.trim(), token, (user, error) => {
+      if (error) {
+        console.error(error);
+        return;
+      }
+      action();
     });
   }
 
@@ -227,8 +227,8 @@ class Sendbird {
 
   getLastMessage(channel) {
     if (channel.lastMessage) {
-        return channel.lastMessage.isUserMessage() || channel.lastMessage.isAdminMessage()
-      ? channel.lastMessage.message : channel.lastMessage.name;
+      return channel.lastMessage.isUserMessage() || channel.lastMessage.isAdminMessage()
+        ? channel.lastMessage.message : channel.lastMessage.name;
     }
     return '';
   }
